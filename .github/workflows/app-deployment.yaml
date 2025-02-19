@@ -55,7 +55,7 @@ jobs:
 
       - name: docker Push
         run: |
-          docker push Korlimarlabalakrishna/github_action_docker:latest     
+          docker push gopidevopskanna/github_action_docker:latest     
 
 
   deploy:

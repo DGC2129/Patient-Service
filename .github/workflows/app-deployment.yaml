@@ -72,7 +72,6 @@ jobs:
         run: |
           mkdir -p $HOME/.kube
           touch config
-          set +X
           echo "${{ secrets.KUBECONFIG }}" | base64 --decode > $HOME/.kube/config
 
       - name: Deploy to Kubernetes

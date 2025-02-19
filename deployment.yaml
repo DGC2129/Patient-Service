@@ -23,7 +23,7 @@ spec:
       terminationGracePeriodSeconds: 1
       containers:
       - name: patient-service
-        image: github_action_docker:latest
+        image: gopidevopskanna/github_action_docker:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000

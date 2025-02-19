@@ -51,7 +51,7 @@ jobs:
 
       - name: docker build
         run: |
-          docker build -t Korlimarlabalakrishna/github_action_docker:latest .
+          docker build -t gopidevopskanna/github_action_docker:latest .
 
       - name: docker Push
         run: |

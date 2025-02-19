@@ -35,6 +35,11 @@ jobs:
       - name: Run Tests
         run: npm test
 
+      - name: Save test results
+        run: |
+          mkdir -p aartifacts/test-results
+          cp -r test-results/* artifacts/test-results        
+
   docker-build-push:
     needs: build-and-test
     runs-on: ubuntu-latest

@@ -48,7 +48,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          ECR_REGISTRY=$(aws ecr describe-registry --query 123456789012.dkr.ecr.us-east-1.amazonaws.com --output text).dkr.ecr.$AWS_REGION.amazonaws.com
+          ECR_REGISTRY=$(aws ecr describe-registry --query 123456789012.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com --output text).dkr.ecr.$AWS_REGION.amazonaws.com
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 

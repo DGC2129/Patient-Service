@@ -18,7 +18,7 @@ spec:
   template:
     metadata:
       labels:
-        app: web
+        app: patient-service
     spec: 
       terminationGracePeriodSeconds: 1
       containers:

@@ -43,6 +43,13 @@ jobs:
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           aws-region: ${{ secrets.AWS_REGION }}
 
+      - name: Log into GH registry
+        uses: actions/checkout@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.TMP_PAT_TOKEN }}            
+
       - name: Log in to Docker Hub
         run: echo "${{ secrets.DOCKER_PASSWORD }}" | docker login -u "${{ secrets.DOCKER_USERNAME }}" --password-stdin             
 
@@ -76,6 +83,5 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          pwd
           kubectl set image deployment/$K8S_DEPLOYMENT= gopidevopskanna/github_action_docker:latest -n $K8S_NAMESPACE
           kubectl rollout status deployment/$K8S_DEPLOYMENT -n $K8S_NAMESPACE

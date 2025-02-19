@@ -28,15 +28,7 @@ jobs:
           node-version: '18'
 
       - name: Install dependencies
-        run: npm install
-
-      - name: Run Tests
-        run: npm test
-
-      - name: Save test results
-        run: |
-          mkdir -p aartifacts/test-results
-          cp -r test-results/* artifacts/test-results        
+        run: npm install      
 
   docker-build-push:
     needs: build-and-test

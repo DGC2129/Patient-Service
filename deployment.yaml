@@ -23,7 +23,7 @@ spec:
       terminationGracePeriodSeconds: 1
       containers:
       - name: patient-service
-        image: 539935451710.dkr.ecr.us-east-1.amazonaws.com/my-app-repo:latest
+        image: github_action_docker:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 3000

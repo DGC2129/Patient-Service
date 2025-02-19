@@ -53,6 +53,11 @@ jobs:
         run: |
           docker build -t Korlimarlabalakrishna/github_action_docker:latest .
 
+      - name: docker Push
+        run: |
+          docker push Korlimarlabalakrishna/github_action_docker:latest     
+
+
   deploy:
     needs: docker-build-push
     runs-on: ubuntu-latest
@@ -68,6 +73,5 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          ECR_REGISTRY=$(aws ecr describe-registry --query "600627363311" --output text).dkr.ecr.$AWS_REGION.amazonaws.com
           kubectl set image deployment/$K8S_DEPLOYMENT patient-service=$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG -n $K8S_NAMESPACE
           kubectl rollout status deployment/$K8S_DEPLOYMENT -n $K8S_NAMESPACE

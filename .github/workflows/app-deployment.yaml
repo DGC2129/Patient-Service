@@ -48,7 +48,7 @@ jobs:
 
       - name: Build and push Docker image
         run: |
-          ECR_REGISTRY=$(aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 600627363311.dkr.ecr.us-east-1.amazonaws.com')
+          ECR_REGISTRY=$('aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 600627363311.dkr.ecr.us-east-1.amazonaws.com')
           docker build -t push 600627363311.dkr.ecr.us-east-1.amazonaws.com:$IMAGE_TAG .
           docker push 600627363311.dkr.ecr.us-east-1.amazonaws.com:$IMAGE_TAG
 

@@ -73,5 +73,5 @@ jobs:
 
       - name: Deploy to Kubernetes
         run: |
-          kubectl set image deployment/$K8S_DEPLOYMENT patient-service=gopidevopskanna/github_action_docker:latest -n $K8S_NAMESPACE
+          kubectl set image deployment/$K8S_DEPLOYMENT= gopidevopskanna/github_action_docker:latest -n $K8S_NAMESPACE
           kubectl rollout status deployment/$K8S_DEPLOYMENT -n $K8S_NAMESPACE

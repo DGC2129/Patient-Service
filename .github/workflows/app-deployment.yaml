@@ -82,6 +82,9 @@ jobs:
           chmod 600 $HOME/.kube/config
 
       - name: Deploy to Kubernetes
+        env:
+          REPO_URL: https://github.com/Patient-Service
         run: |
+          kubectl apply -f deployment.yaml
           kubectl set image deployment/$K8S_DEPLOYMENT= gopidevopskanna/github_action_docker:latest -n $K8S_NAMESPACE
           kubectl rollout status deployment/$K8S_DEPLOYMENT -n $K8S_NAMESPACE

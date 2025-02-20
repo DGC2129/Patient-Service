@@ -1,24 +1,11 @@
-
 provider "aws" {
   region = var.aws_region
 }
 
 data "aws_availability_zones" "available" {}
 
-# locals {
-#   cluster_name = "abhi-eks-${random_string.suffix.result}"
-# }
-
 locals {
-  owners      = var.business_division
-  environment = var.environment
-  name        = "${var.business_division}-${var.environment}"
   cluster_name = "abhi-eks-${random_string.suffix.result}"
-  #name = "${local.owners}-${local.environment}"
-  common_tags = {
-    owners      = local.owners
-    environment = local.environment
-  }
 }
 
 resource "random_string" "suffix" {
@@ -30,7 +17,7 @@ module "vpc" {
   source  = "terraform-aws-modules/vpc/aws"
   version = "5.7.0"
 
-  name                 = ${local.name}-${var.environment}
+  name                 = "abhi-eks-vpc"
   cidr                 = var.vpc_cidr
   azs                  = data.aws_availability_zones.available.names
   private_subnets      = ["10.0.1.0/24", "10.0.2.0/24"]

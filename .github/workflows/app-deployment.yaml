@@ -87,6 +87,38 @@ jobs:
           tfenv install 1.10.0
           tfenv 1.10.0
           terraform version
+          
+      - name: Validate Terraform    
+        run: |
           terraform fmt
           terraform validate
+          
+      - name: Apply Terraform Configuration
+        run: |
+          cd terraform
+          terraform apply -auto-approve
+          
+  deploy:
+    needs: docker-build-push
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Configure kubectl
+        uses: azure/setup-kubectl@v3
+
+      - name: Set up Kubeconfig
+        run: |
+          mkdir -p $HOME/.kube
+          echo "${{ secrets.KUBECONFIG }}" | base64 --decode >> $HOME/.kube/config
+          chmod 600 $HOME/.kube/config
+
+      - name: Deploy to Kubernetes
+        env:
+          REPO_URL: https://github.com/Patient-Service
+        run: |
+          kubectl apply -f deployment.yaml
+          kubectl set image deployment/$K8S_DEPLOYMENT patient-service=github_action_docker:latest -n $K8S_NAMESPACE
+          kubectl rollout status deployment/$K8S_DEPLOYMENT -n $K8S_NAMESPACE
 

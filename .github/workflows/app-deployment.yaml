@@ -9,7 +9,7 @@ on:
       - main
 
 env:
-  ECR_REPOSITORY: patient-service
+  ECR_REPOSITORY: myrepo
   IMAGE_TAG: latest
   K8S_DEPLOYMENT: patient-service
   K8S_NAMESPACE: default

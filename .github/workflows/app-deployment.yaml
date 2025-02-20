@@ -66,28 +66,23 @@ jobs:
         run: |
           docker push gopidevopskanna/github_action_docker:latest
           docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.${{ secrets.AWS_REGION }}.amazonaws.com/${ECR_REPOSITORY}:${IMAGE_TAG}
-
-
-  deploy:
-    needs: docker-build-push
+          
+  deploy-infra:
+    name: Deploy Infrastructure with Terraform
     runs-on: ubuntu-latest
+    needs: docker-build-push
     steps:
-      - name: Checkout code
+      - name: Checkout Code
         uses: actions/checkout@v3
 
-      - name: Configure kubectl
-        uses: azure/setup-kubectl@v3
+      - name: Set Up Terraform
+        uses: hashicorp/setup-terraform@v2
+        with:
+          terraform_version: 1.3.0
 
-      - name: Set up Kubeconfig
+      - name: Initialize Terraform
         run: |
-          mkdir -p $HOME/.kube
-          echo "${{ secrets.KUBECONFIG }}" | base64 --decode >> $HOME/.kube/config
-          chmod 600 $HOME/.kube/config
-
-      - name: Deploy to Kubernetes
-        env:
-          REPO_URL: https://github.com/Patient-Service
-        run: |
-          kubectl apply -f deployment.yaml
-          kubectl set image deployment/$K8S_DEPLOYMENT patient-service=github_action_docker:latest -n $K8S_NAMESPACE
-          kubectl rollout status deployment/$K8S_DEPLOYMENT -n $K8S_NAMESPACE
+          cd terraform
+          terraform init
+          terraform validate
+          terraform plan

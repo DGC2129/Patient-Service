@@ -3,7 +3,7 @@ name: CI/CD for Patient Service
 on:
   push:
     branches:
-      - main
+      - DGC2129-patch-1 
   pull_request:
     branches:
       - main

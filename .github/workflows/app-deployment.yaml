@@ -83,6 +83,6 @@ jobs:
       - name: Initialize Terraform
         run: |
           cd terraform
-          terraform init
           terraform validate
+          terraform init
           terraform plan

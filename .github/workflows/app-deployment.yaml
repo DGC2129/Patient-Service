@@ -1,14 +1,14 @@
 name: CI/CD for Patient Service
-
 on:
-  push:
-    branches:
-      - DGC2129-patch-1 
-  pull_request:
-    branches:
-      - main
   workflow_dispatch:
-  
+    inputs:
+      branches:
+      description: Branch to be deployed
+      required: true
+      type: choice
+      options:
+        - DGC2129-patch-1
+        - MAIN
 env:
   ECR_REPOSITORY: myrepo
   IMAGE_TAG: latest

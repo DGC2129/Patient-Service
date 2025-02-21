@@ -2,17 +2,17 @@ pipeline {
     agent any
 
     environment {
-        AWS_REGION = '*****************'
-        ECR_REPOSITORY = '***********'
+        AWS_REGION = 'us-east-1'
+        ECR_REPOSITORY = 'myrepo'
         IMAGE_NAME = 'my-app-repo'
         IMAGE_TAG = 'latest'
-        AWS_ACCOUNT_ID = '**************'
+        AWS_ACCOUNT_ID = '600627363311'
     }
 
     stages {
         stage('Checkout') {
             steps {
-                git branch: 'main', url: 'https://github.com/Korlimarlabalakrishna/Patient-Service.git'
+                git branch: 'main', url: 'https://github.com/DGC2129/Patient-Service.git'
             }
         }
         
@@ -58,9 +58,10 @@ pipeline {
     post {
         always {
             script {
-                sh 'docker logout ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com'
+                sh """
+                docker logout ${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com
+                """
             }
         }
     }
 }
-
